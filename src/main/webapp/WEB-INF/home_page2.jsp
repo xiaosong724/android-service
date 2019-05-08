@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="css/styles.imageuploader.css" rel="stylesheet" type="text/css">
     <script src="homepagetwo/js/modernizr.js"></script> <!-- Modernizr -->
+    <style>
+
+    </style>
 </head>
 <body>
 <header class="htmleaf-header">
@@ -28,10 +31,10 @@
                 <span class="burger burger-2"></span>
                 <span class="burger burger-3"></span>
             </label>
-            <a href="#" class="gooey-menu-item" data-toggle="modal" data-target="#exampleModal"> <i class="fa fa-train">写日志</i>
+            <a href="javascript:;" class="gooey-menu-item" data-toggle="modal" data-target="#exampleModal"> <i class="fa fa-train">写日志</i>
             </a>
-            <a href="#" class="gooey-menu-item"> <i class="fa fa-bicycle">改日志</i> </a>
-            <a href="#" class="gooey-menu-item"><i class="fa fa-rocket">搜索 </i> </a>
+            <a href="#" class="gooey-menu-item"data-toggle="modal" data-target="#exampleModal_up"> <i class="fa fa-bicycle">改日志</i> </a>
+            <a href="javascript:;" class="gooey-menu-item"><i class="fa fa-rocket">搜索 </i> </a>
             <%--<a href="#" class="gooey-menu-item"> <i class="fa fa-automobile"></i> </a>--%>
         </nav>
     </div>
@@ -43,6 +46,7 @@
             <li class="cd-item"
                 style="background-image:url('${lovelog.coversrc}');background-size: 100% auto;background-position: center center;">
                 <c:url var="myURL" value="../item-1.jsp">
+                    <c:param name="id" value="${lovelog.id}"/>
                     <c:param name="username" value="${lovelog.username}"/>
                     <c:param name="title" value="${lovelog.title}"/>
                     <c:param name="logtype" value="${lovelog.logtype}"/>
@@ -76,55 +80,7 @@
 
     <a class="cd-close" href="#0"></a>
 </div> <!-- .cd-folding-panel -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="/lovelogup" method="post" enctype="multipart/form-data" onsubmit="return examinetab()">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="recipient-title" class="control-label">标题:</label>
-                        <input type="text" name="title" class="form-control" id="recipient-title">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="control-label">作者:</label>
-                        <input type="text" name="username" class="form-control" id="recipient-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-logtype" class="control-label">搜索关键词:</label>
-                        <input type="text" name="logtype" class="form-control" id="recipient-logtype">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="control-label">日志:</label>
-                        <textarea class="form-control"  name="message" id="message-text"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <section role="main" class="l-main">
-
-                            <div class="uploader__box js-uploader__box l-center-box">
-                                <div class="uploader__contents">
-                                    <label class="button button--secondary" for="fileinput">请选择文件</label>
-                                    <input id="fileinput" class="uploader__file-input" type="file" multiple
-                                           value="Select Files">
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Send message</button>
-                </div>
-                <input type="hidden" name="deleteindex" class="form-control" value="" id="delete_file_index">
-
-            </form>
-        </div>
-    </div>
-</div>
+<%@include file="fromupdate.jsp"%>
 <script src="anniu/jquery-2.1.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="anniu/gooey.min.js"></script>
@@ -133,20 +89,25 @@
 <script>
     //日志填写验证
     function examinetab() {
+        var himt_value=$("#himt_value");
         if($("#recipient-title").val().length<1){
-            alert("标题长度大于1");
+            himt_value.text("标题长度大于1");
+            //alert("标题长度大于1");
             return false;
         }
         if($("#recipient-name").val().length<1){
-            alert("作者名未填写");
+            himt_value.text("作者名未填写");
+          //  alert("作者名未填写");
             return false;
         }
         if($("#recipient-logtype").val().length<1){
-            alert("搜索类型未填写");
+            himt_value.text("搜索类型未填写");
+          //  alert("搜索类型未填写");
             return false;
         }
         if($("#message-text").val().length<1){
-            alert("日记不能不写哦");
+            himt_value.text("日记不能不写哦");
+           // alert("日记不能不写哦");
             return false;
         }
 
@@ -163,6 +124,98 @@
             'secondarySelectButtonCopy': '选择更多的文件'
         });
     }());
+
+    //修改日志
+    function ajax_query_log(){
+        var recipient_id_up=$("#recipient_id_up");
+        var zhengzhe=/^[0-9]*$/;
+        var id_standard=$("#id_standard");
+        if(recipient_id_up.val().length<1){
+            id_standard.text("ID未填写");
+            return;
+        }
+        if(!zhengzhe.test(recipient_id_up.val())){
+            id_standard.text("请填写正确的ID(纯数字)");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/querylog",
+            data: "logid="+recipient_id_up.val(),
+            dataType: "json",
+            success: function (msg) {
+                if(msg==null){
+                    id_standard.text("ID: "+recipient_id_up.val()+",未找到!");
+                    return;
+                }
+                val_up(msg);
+
+            }
+        });
+    }
+    //把请求的val放入输入框
+    function val_up(loveLog){
+        var recipient_title_up =$("#recipient_title_up");
+        var recipient_name_up =$("#recipient_name_up");
+        var recipient_logtype_up =$("#recipient_logtype_up");
+        var message_text_up =$("#message_text_up");
+        var img_val =$("#img_val");
+        recipient_title_up.val(loveLog.title);
+        recipient_name_up.val(loveLog.username);
+        recipient_logtype_up.val(loveLog.logtype);
+        message_text_up.val(loveLog.message);
+        img_val.html(loveLog.imgsrc);
+        //去除a标签跳转并添加是否删除图片标记
+        $("#img_val").on("click",".song_a",function(){
+            var alist=$("#img_val img");
+            $("#img_val a").each(function(){
+                var img_url = $(this).attr("src");
+                $(this).attr('href','javascript:');
+            });
+           var imgstr= $(this).html();
+            //添加移动端长按弹宽
+            $(this).on({
+                touchstart: function(e) {
+                    // 长按事件触发
+                    timeOutEvent = setTimeout(function() {
+                        timeOutEvent = 0;
+                        $("#showdetele").show();
+                        $("#del_msg").attr("del",imgstr);
+
+                    }, 400);
+                    //长按400毫秒
+                    // e.preventDefault();
+                },
+                touchmove: function() {
+                    clearTimeout(timeOutEvent);
+                    timeOutEvent = 0;
+                },
+                touchend: function() {
+                    clearTimeout(timeOutEvent);
+                    if (timeOutEvent != 0) {
+                        // 点击事件
+                        // location.href = '/a/live-rooms.html';
+                        alert(typeof $(this).html());
+
+                    }
+                    return false;
+                }
+            })
+
+
+        });
+    }
+    function delete_img(delmsg){
+
+        $("#showdetele").hide();
+    }
+    function delete_box(){
+        $("#showdetele").hide();
+    }
+
+
+
+
 
     $(function ($) {
 

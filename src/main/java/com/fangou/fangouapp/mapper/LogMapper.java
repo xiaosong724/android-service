@@ -14,4 +14,7 @@ public interface LogMapper {
 
     @Insert("insert into lovelogtab (username,title,coversrc,nowtime,logtype,message,imgsrc) values(#{username},#{title},#{coversrc},#{nowtime},#{logtype},#{message},#{imgsrc})")
     void lovelogup(LoveLog loveLog);
+
+    @Select("SELECT * FROM lovelogtab WHERE id=#{id}")
+    LoveLog queryIdLog(int id);
 }

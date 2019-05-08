@@ -37,15 +37,10 @@ public class LogServiceIml implements LogService {
         if(!deleteindex.equals("")){
             String[] str = deleteindex.split(",");
             ints = new int[str.length];
-
             for (int i = 0; i<str.length ; i++) {
                 ints[i]=Integer.parseInt(str[i]);
-                // test
-                // test2
             }
         }
-
-
         for (int i = 0; i<file.length ; i++){
             int num=0;
             if(ints!=null){
@@ -58,13 +53,10 @@ public class LogServiceIml implements LogService {
                     continue;
                 }
             }
-
-
             if (file[i].isEmpty()) {
                 System.out.println("上传文件不可为空");
                 continue;
             }
-
             // 获取文件名
             String filepath = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_";
             String fileName = file[i].getOriginalFilename();
@@ -72,7 +64,7 @@ public class LogServiceIml implements LogService {
             String path = request.getServletContext().getRealPath("/img/")+fileName;
             String path2 = request.getServletContext().getRealPath("/img/mini/")+fileName;
             coversrc= filepath+file[0].getOriginalFilename();
-            imgsrc+="<a href=\""+"/img/"+filepath+file[i].getOriginalFilename()+"\"><img class=\"songsize\" src=\""+"/img/mini/"+filepath+file[i].getOriginalFilename()+"\"></a>";
+            imgsrc+="<a class=\"song_a\" href=\""+"/img/"+filepath+file[i].getOriginalFilename()+"\"><img class=\"songsize\" src=\""+"/img/mini/"+filepath+file[i].getOriginalFilename()+"\"></a>";
             System.out.print("保存文件绝对路径"+path+"\n");
             //创建文件路径
             File dest = new File(path);
@@ -80,12 +72,10 @@ public class LogServiceIml implements LogService {
             if (dest.exists()) {
                 System.out.println("文件已经存在");
             }
-
             //判断文件父目录是否存在
             if (!dest.getParentFile().exists()) {
                 dest.getParentFile().mkdir();
             }
-
             try {
                 //上传文件
                 file[i].transferTo(dest); //保存文件
@@ -103,5 +93,11 @@ public class LogServiceIml implements LogService {
             pa1="";
         }
         logMapper.lovelogup(new LoveLog(username,title,pa1+coversrc,new Date(),logtype,message,imgsrc));
+    }
+
+    @Override
+    public LoveLog queryIdLog(int id) {
+        LoveLog loveLog = logMapper.queryIdLog(id);
+        return loveLog;
     }
 }

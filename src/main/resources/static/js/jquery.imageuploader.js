@@ -32,7 +32,7 @@
                     options.submitButtonCopy + '<i class="js-uploader__icon fa fa-upload uploader__icon"></i></button>'),
                 instructions: $('<p class="js-uploader__instructions uploader__instructions">' +
                     options.instructionsCopy + '</p>'),
-                selectButton: $('<input style="height: 0; width: 0;" name="file" id="fileinput' + index + '" type="file" multiple class="js-uploader__file-input uploader__file-input">' +
+                selectButton: $('<input style="height: 0; width: 0;" name="file"  multiple accept="image/*" id="fileinput' + index + '" type="file"  class="js-uploader__file-input uploader__file-input">' +
                     '<label for="fileinput' + index + '" style="cursor: pointer;" class="js-uploader__file-label uploader__file-label">' +
                     options.selectButtonCopy + '</label>'),
                 secondarySelectButton: $('<input style="height: 0; width: 0;" id="secondaryfileinput' + index + '" type="file"' +

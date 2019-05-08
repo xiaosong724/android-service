@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
+	String id=request.getParameter("id");
 	String username=request.getParameter("username");
 	String title=request.getParameter("title");
 	String logtype=request.getParameter("logtype");
@@ -23,7 +24,7 @@
 <body>
 	<div class="cd-fold-content single-page">
 		<h2><%=title%></h2>
-		<em> 作者:<%=username%>  类型:<%=logtype%></em>
+		<em>日志专属ID:<%=id%> 作者:<%=username%>  类型:<%=logtype%></em>
 
 		<p>
 			<%=message%>
