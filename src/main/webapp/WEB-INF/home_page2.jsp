@@ -8,12 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>主页</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="anniu/gooey.min.css">
     <link rel="stylesheet" href="anniu/livedemo.css">
     <link rel="stylesheet" href="homepagetwo/css/reset.css"> <!-- CSS reset -->
     <link rel="stylesheet" type="text/css" href="homepagetwo/css/default.css">
     <link rel="stylesheet" href="homepagetwo/css/style.css"> <!-- Resource style -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="css/styles.imageuploader.css" rel="stylesheet" type="text/css">
     <script src="homepagetwo/js/modernizr.js"></script> <!-- Modernizr -->
     <style>
@@ -179,9 +179,8 @@
                     // 长按事件触发
                     timeOutEvent = setTimeout(function() {
                         timeOutEvent = 0;
-                        $("#showdetele").show();
                         $("#del_msg").attr("del",imgstr);
-
+                        $("#showdetele").show();
                     }, 400);
                     //长按400毫秒
                     // e.preventDefault();
@@ -206,7 +205,6 @@
         });
     }
     function delete_img(delmsg){
-
         $("#showdetele").hide();
     }
     function delete_box(){

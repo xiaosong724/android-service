@@ -6,11 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>发表或修改日志</title>
-</head>
-<body>
+
 <%--发表日志--%>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
@@ -140,14 +136,13 @@
 <div class="modal bs-example-modal-sm" tabindex="-1" id="showdetele">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
-            <div class="pull-left">
-                <button class="button"del="" id="del_msg" onclick="delete_img()">删除</button>
-            </div>
+
             <div class="pull-right">
-                <button class="button" onclick="delete_box()">放弃</button>
+                <button class="button" onclick="delete_box()"> </button>
+            </div>
+            <div class="pull-left">
+                <button class="button"del="nul" id="del_msg" onclick="delete_img()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
             </div>
         </div>
     </div>
 </div>
-</body>
-</html>
