@@ -2,6 +2,7 @@ package com.fangou.fangouapp.service;
 
 import com.fangou.fangouapp.mapper.LogMapper;
 import com.fangou.fangouapp.util.ToImgUtil;
+import com.fangou.fangouapp.vo.Background;
 import com.fangou.fangouapp.vo.LoveLog;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -83,7 +84,6 @@ public class LogServiceIml implements LogService {
             try {
                 //上传文件
                 file[i].transferTo(dest); //保存文件
-                System.out.print("保存文件路径"+path+"\n");
                 ToImgUtil.toSmaillImg(path,path2);
                 System.out.println("视频上传成功");
             } catch (IOException e) {
@@ -103,5 +103,48 @@ public class LogServiceIml implements LogService {
     public LoveLog queryIdLog(int id) {
         LoveLog loveLog = logMapper.queryIdLog(id);
         return loveLog;
+    }
+
+    @Override
+    public Background showbackground(String yesback) {
+        Background showbackground = logMapper.showbackground(yesback);
+        return showbackground;
+    }
+
+    @Override
+    public PageInfo showbackgroundAll(int num) {
+        PageHelper.startPage(num,4);
+        List<Background> backgrounds = logMapper.showbackgroundAll();
+        PageInfo<Background> pageInfo = new PageInfo<>(backgrounds);
+        return pageInfo;
+    }
+
+    @Override
+    public void uploadBackground(MultipartFile files,HttpServletRequest request,Background background,String yyyyMMddHHmm) {
+        String originalFilename = files.getOriginalFilename();
+        String path=request.getServletContext().getRealPath("/welcomeimg/")+yyyyMMddHHmm+originalFilename;
+        String path2=request.getServletContext().getRealPath("/welcomeimg/mini/")+yyyyMMddHHmm+originalFilename;
+        try {
+            ToImgUtil.toSmaillImgback(files,path,2400);
+            ToImgUtil.toSmaillImgback(files,path2,600);
+            logMapper.uploadBackground(background);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateBackground(String yesback) {
+        logMapper.updateBackground(yesback);
+    }
+
+    @Override
+    public void updateNewBackground(int id) {
+        logMapper.updateNewBackground(id);
+    }
+
+    @Override
+    public void updateNewBackgroundHight(int id, String hightback) {
+        logMapper.updateNewBackgroundHight(hightback,id);
     }
 }

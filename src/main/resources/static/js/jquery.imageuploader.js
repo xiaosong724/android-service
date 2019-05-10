@@ -243,8 +243,8 @@
                 renderControls();
             }
             function no_upload_index(id) {
-                var val=document.getElementById("delete_file_index");
-                val.value+=id+",";
+                var val=$("#delete_file_index");
+                val.val(val.val()+id+",");
                 console.log(val);
             }
             function removeItem (id) {
@@ -262,8 +262,6 @@
                 // remove from the DOM
 
                 dom.fileList.find('li[data-index="' + id + '"]').remove();
-
-
 
             }
         });

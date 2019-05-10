@@ -1,6 +1,7 @@
 package com.fangou.fangouapp.controller;
 
 import com.fangou.fangouapp.service.LogService;
+import com.fangou.fangouapp.vo.Background;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,5 +25,11 @@ public class HomePageCon {
         PageInfo pageInfo = logService.showLoveLog(page);
         model.addAttribute("loveLogs",pageInfo);
         return "home_page2";
+    }
+    @RequestMapping("/")
+    public String welcome(Model model){
+        Background show = logService.showbackground("show");
+        model.addAttribute("welcomeimg",show);
+        return "welcome_page";
     }
 }

@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="homepagetwo/css/default.css">
     <link rel="stylesheet" href="homepagetwo/css/style.css"> <!-- Resource style -->
     <link href="css/styles.imageuploader.css" rel="stylesheet" type="text/css">
+
     <script src="homepagetwo/js/modernizr.js"></script> <!-- Modernizr -->
     <style>
 
@@ -31,16 +32,26 @@
                 <span class="burger burger-2"></span>
                 <span class="burger burger-3"></span>
             </label>
-            <a href="javascript:;" class="gooey-menu-item" data-toggle="modal" data-target="#exampleModal"> <i class="fa fa-train">写日志</i>
+            <a href="#" class="gooey-menu-item" data-toggle="modal" data-target="#exampleModal"> <i class="fa fa-train">写日志</i>
             </a>
             <a href="#" class="gooey-menu-item"data-toggle="modal" data-target="#exampleModal_up"> <i class="fa fa-bicycle">改日志</i> </a>
-            <a href="javascript:;" class="gooey-menu-item"><i class="fa fa-rocket">搜索 </i> </a>
+            <a href="#" class="gooey-menu-item"><i class="fa fa-rocket">搜索 </i> </a>
+            <a href="/upadteback" class="gooey-menu-item" ><i class="fa fa-rocket">改背景</i> </a>
+            <a href="#" class="gooey-menu-item" data-toggle="modal" data-target="#exampleModal_back"><i class="fa fa-rocket">新添加</i> </a>
+            <a href="/home" class="gooey-menu-item"><i class="fa fa-rocket">刷新 </i> </a>
             <%--<a href="#" class="gooey-menu-item"> <i class="fa fa-automobile"></i> </a>--%>
         </nav>
     </div>
-
+    <p class="page-description text-center">${loveLogs.pageNum}/${loveLogs.pages}页数</p>
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous"><a href="/home?page=${loveLogs.prePage}" style="color: black"><span aria-hidden="true">&larr;</span> Older</a></li>
+            <li class="next"><a href="/home?page=${loveLogs.nextPage}" style="color: black">Newer <span aria-hidden="true">&rarr;</span></a></li>
+        </ul>
+    </nav>
 </header>
 <main class="cd-main">
+
     <ul class="cd-gallery">
         <c:forEach var="lovelog" items="${loveLogs.list}">
             <li class="cd-item"
@@ -87,6 +98,7 @@
 <script src="homepagetwo/js/main.js"></script> <!-- Resource jQuery -->
 <script src="js/jquery.imageuploader.js"></script>
 <script>
+
     //日志填写验证
     function examinetab() {
         var himt_value=$("#himt_value");
@@ -110,7 +122,7 @@
            // alert("日记不能不写哦");
             return false;
         }
-
+        $("#one_click").attr("disabled","disabled");
         return true;
     }
 
@@ -153,7 +165,7 @@
             }
         });
     }
-    //把请求的val放入输入框
+    //把请求修改的日志的val放入输入框
     function val_up(loveLog){
         var recipient_title_up =$("#recipient_title_up");
         var recipient_name_up =$("#recipient_name_up");
@@ -211,7 +223,53 @@
         $("#showdetele").hide();
     }
 
+    //上传欢迎背景图
+    function  uploadback(){
 
+        var radioval= $("input[name='background_img']:checked").val();
+       var fileback= $("#recipient-backpath_back").val();
+        var ckbox_hight=$('#ckbox_hight').prop('checked');
+    if(fileback==""){
+        alert("文件不能为空");
+        return false;
+    }
+    var hightback="auto";
+    if(ckbox_hight){
+        hightback="100%";
+    }
+    $("#onlyone_click").attr("disabled","disabled");
+        var formData = new FormData();
+        formData.append("myfile", document.getElementById("recipient-backpath_back").files[0]);
+        formData.append("yesback", radioval);
+        formData.append("hightback",hightback)
+        $.ajax({
+            url: "/uploadbackground",
+            type: "POST",
+            data: formData,
+            /**
+             *必须false才会自动加上正确的Content-Type
+             */
+            contentType: false,
+            /**
+             * 必须false才会避开jQuery对 formdata 的默认处理
+             * XMLHttpRequest会对 formdata 进行正确的处理
+             */
+            processData: false,
+            dataType:"text",
+            success: function (data) {
+
+                document.getElementById("recipient-backpath_back").value="";
+                $("#onlyone_click").removeAttr("disabled");
+                $("#exampleModal_back").modal('hide');//模态框手动关闭
+                alert(data);
+
+
+            },
+            error: function () {
+                alert("上传失败！");
+            }
+        });
+    }
 
 
 
