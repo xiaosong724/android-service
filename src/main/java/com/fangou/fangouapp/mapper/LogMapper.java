@@ -1,7 +1,6 @@
 package com.fangou.fangouapp.mapper;
 
-import com.fangou.fangouapp.vo.Background;
-import com.fangou.fangouapp.vo.LoveLog;
+import com.fangou.fangouapp.vo.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -14,6 +13,14 @@ public interface LogMapper {
      */
     @Select("SELECT * FROM lovelogtab ORDER BY nowtime DESC")
     List<LoveLog> showLoveLog();
+
+    /**
+     * 查询某个日志的图片
+     * @param logid
+     * @return
+     */
+    @Select("SELECT * FROM logimgtab WHERE logid=#{logid}")
+    List<Loveimg> showLoveImg(int logid);
 
     /**
      * 查询单个日志
@@ -38,13 +45,33 @@ public interface LogMapper {
     @Select("SELECT * FROM backgroundtab ORDER BY id DESC")
     List<Background>showbackgroundAll();
 
-
+    /**
+     * 显示所有的日志图片
+     * @return
+     */
+    @Select("SELECT l.*,lg.title FROM logimgtab l,lovelogtab lg WHERE l.logid=lg.id")
+    List<Logimg>showLogimg();
+    /**
+     * 每删除一次查询本日志是否还有图片
+     * @param logid
+     * @return
+     */
+    @Select("SELECT l.imgpath,MIN(imgid) FROM logimgtab l WHERE logid=#{logid}")
+    ImgidAndImgpath queryIdAndpath(int logid);
     /**
      * 写入一篇日志
      * @param loveLog
      */
-    @Insert("insert into lovelogtab (username,title,coversrc,nowtime,logtype,message,imgsrc) values(#{username},#{title},#{coversrc},#{nowtime},#{logtype},#{message},#{imgsrc})")
-    void lovelogup(LoveLog loveLog);
+    @Insert("INSERT INTO lovelogtab (username,title,coversrc,nowtime,logtype,message,viewcount) values(#{username},#{title},#{coversrc},#{nowtime},#{logtype},#{message},#{viewcount})")
+    @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
+    int lovelogup(LoveLog loveLog);
+
+    /**
+     * 写入一篇日志时插入图片list
+     * @param loveimg
+     */
+    @Insert("INSERT INTO logimgtab (logid,imgpath) VALUES(#{logid},#{imgpath})")
+    void loveimgup(Loveimg loveimg);
 
     /**
      * 添加一张欢迎界面图片
@@ -68,12 +95,32 @@ public interface LogMapper {
     void updateNewBackground(int id);
 
     /**
-     * 修改ID它高是否拉伸
+     * 修改上传背景图ID它高是否拉伸
      * @param id
      * @param hightback
      */
     @Update("UPDATE backgroundtab SET hightback = '${hightback}' WHERE id = #{id}")
     void updateNewBackgroundHight(@Param("hightback")String hightback,@Param("id")int id);
 
+    /**
+     * 每次日志中的图片删除,更新封面没有设为空
+     * @param coversrc
+     * @param id
+     */
+    @Update("UPDATE lovelogtab SET coversrc = '${coversrc}' WHERE id = #{id}")
+    void updateLogimg(@Param("coversrc")String coversrc,@Param("id")int id);
 
+    /**
+     *  更新当前日志文本信息
+     * @param username
+     * @param title
+     * @param logtype
+     * @param message
+     * @param id
+     */
+    @Update("UPDATE lovelogtab SET username = '${username}',title = '${title}',logtype = '${logtype}',message = '${message}' WHERE id = #{id}")
+    void updateLogtext(@Param("username")String username,@Param("title")String title,@Param("logtype")String logtype,@Param("message")String message,@Param("id")int id);
+
+    @Delete("DELETE FROM logimgtab WHERE imgid=#{imgid}")
+    void deleteImgId(int imgid);
 }

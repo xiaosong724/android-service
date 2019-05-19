@@ -11,7 +11,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="/lovelogup" method="post" enctype="multipart/form-data" onsubmit="return examinetab()">
+            <form  method="post" enctype="multipart/form-data" onsubmit="return examinetab()">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
@@ -20,34 +20,31 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="recipient-title" class="control-label">标题:</label>
-                        <input type="text" name="title" class="form-control" id="recipient-title">
+                        <label for="recipient_title" class="control-label">标题:</label>
+                        <input type="text" name="title" class="form-control" id="recipient_title">
                     </div>
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label">作者:</label>
-                        <input type="text" name="username" class="form-control" id="recipient-name">
+                        <label for="recipient_name" class="control-label">作者:</label>
+                        <input type="text" name="username" class="form-control" id="recipient_name">
                     </div>
                     <div class="form-group">
-                        <label for="recipient-logtype" class="control-label">搜索关键词:</label>
-                        <input type="text" name="logtype" class="form-control" id="recipient-logtype">
+                        <label for="recipient_logtype" class="control-label">搜索关键词:</label>
+                        <input type="text" name="logtype" class="form-control" id="recipient_logtype">
                     </div>
                     <div class="form-group">
-                        <label for="message-text" class="control-label">日志:</label>
-                        <textarea class="form-control" name="message" id="message-text"></textarea>
+                        <label for="message_text" class="control-label">日志:</label>
+                        <textarea class="form-control" name="message" id="message_text"></textarea>
                     </div>
                     <div class="form-group">
-                        <section role="main" class="l-main">
-                            <div class="uploader__box js-uploader__box l-center-box">
-
-                            </div>
-                        </section>
+                        <label for="newlogfile" class="control-label"><h2>新的照片上传:</h2></label>
+                        <input type="file" name="logtype" multiple id="newlogfile">
+                        <div id="image-holder2" > </div>
                     </div>
                 </div>
-                <input type="hidden" name="deleteindex" class="form-control" value="" id="delete_file_index">
                 <div class="modal-footer">
                     <span id="himt_value" style="color: red"></span>
                     <button type="reset" class="btn btn-default" data-dismiss="modal">返回</button>
-                    <button type="submit" id="one_click" class="btn btn-primary">发表</button>
+                    <button type="button" id="one_click" onclick="upload_log_text()" class="btn btn-primary">发表</button>
                 </div>
 
             </form>
@@ -60,7 +57,7 @@
 <div class="modal fade" id="exampleModal_up" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="/lovelogupdate" method="post" enctype="multipart/form-data" onsubmit="return examinetab()">
+            <form  method="post" enctype="multipart/form-data" onsubmit="return examinetab()">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
@@ -71,57 +68,53 @@
                     <div class="form-group">
 
                         <div class="pull-right">
-                            <button class="button" onclick="ajax_query_log()">搜索ID</button>
+                            <button class="btn btn-info" onclick="ajax_query_log()">搜索ID</button>
                         </div>
                         <div class="pull-right">
-                            <button class="button">查看目录</button>
+                            <button class="btn btn-default">查看目录</button>
                         </div>
                         <label for="recipient_id_up" class="control-label">修改日志的专属ID:</label>
                         <span id="id_standard" style="color:red;"></span>
                         <input type="text" name="title" class="form-control" id="recipient_id_up">
+                        <input type="hidden" name="hiddenid"  id="recipient_hidden_id_up">
 
                     </div>
                     <div class="form-group">
-                        <label for="recipient-title" class="control-label">标题:</label>
+                        <label for="recipient_title_up" class="control-label">标题:</label>
                         <input type="text" name="title" class="form-control" id="recipient_title_up">
                     </div>
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label">作者:</label>
+                        <label for="recipient_name_up" class="control-label">作者:</label>
                         <input type="text" name="username" class="form-control" id="recipient_name_up">
                     </div>
                     <div class="form-group">
-                        <label for="recipient-logtype" class="control-label">搜索关键词:</label>
+                        <label for="recipient_logtype_up" class="control-label">搜索关键词:</label>
                         <input type="text" name="logtype" class="form-control" id="recipient_logtype_up">
                     </div>
                     <div class="form-group">
-                        <label for="message-text" class="control-label">日志:</label>
+                        <label for="message_text_up" class="control-label">日志:</label>
                         <textarea class="form-control" name="message" id="message_text_up"></textarea>
                     </div>
+
+
                     <div class="form-group">
-                        <label for="message-text" class="control-img">日志原图:</label>
+                        <label for="img_val" class="control-img">日志原图:</label>
                         <div class="songimgsize" id="img_val">
 
                         </div>
                     </div>
+                    <hr>
                     <div class="form-group">
-                        <section role="main" class="l-main">
-
-                            <div class="uploader__box js-uploader__box l-center-box">
-                                <div class="uploader__contents">
-
-                                </div>
-                            </div>
-                        </section>
+                        <label for="scscsc" class="control-label"><h2>新的照片上传:</h2></label>
+                        <input type="file" name="logtype" multiple id="scscsc">
+                        <div id="image-holder" > </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <span id="himt_value_up" style="color: red"></span>
                     <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
-                    <button type="submit" class="btn btn-primary">修改</button>
+                    <button type="button" id="one_click2" onclick="update_log_text()" class="btn btn-primary">修改</button>
                 </div>
-
-                <input type="hidden" name="deleteindex" class="form-control" value="" id="delete_file_index_up">
-                <input type="hidden" name="deleteimg" class="form-control" value="" id="delete_file_img_up">
 
             </form>
         </div>
@@ -132,7 +125,7 @@
 <div class="modal fade" id="exampleModal_back" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="/lovelogup" method="post" enctype="multipart/form-data" onsubmit="return examinetab()">
+            <form  method="post" enctype="multipart/form-data" >
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
@@ -156,14 +149,15 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="file" name="file" class="form-control" accept="image/*" id="recipient-backpath_back">
+                        <input type="file" name="file" class="form-control" accept="image/*" id="recipient_backpath_back">
+                        <div id="image-holder3"> </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <span id="himt_value_back" style="color: red"></span>
                     <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
-                    <button type="button" onclick="uploadback()" id="onlyone_click" class="btn btn-primary">发表</button>
+                    <button type="button" onclick="uploadback()" id="onlyone_click" class="btn btn-primary">上传</button>
                 </div>
 
             </form>
@@ -172,19 +166,4 @@
 </div>
 
 
-<%--删除框--%>
-<div class="modal bs-example-modal-sm" tabindex="-1" id="showdetele">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="pull-left">
-                <button class="button" del="nul" id="del_msg" onclick="delete_img()"
-                        style="background: url('img/fanbtn.jpg');background-size: 100% 100%;width:100px;height: 50px"></button>
-            </div>
-            <div class="pull-right">
-                <button class="button" onclick="delete_box()"
-                        style="background: url('img/songbtn.jpg');background-size: 100% 100%;width:100px;height: 50px"></button>
-            </div>
 
-        </div>
-    </div>
-</div>

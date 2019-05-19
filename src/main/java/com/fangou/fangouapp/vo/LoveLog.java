@@ -1,6 +1,7 @@
 package com.fangou.fangouapp.vo;
 
 import java.util.Date;
+import java.util.List;
 
 public class LoveLog {
     private int id;
@@ -10,22 +11,36 @@ public class LoveLog {
     private Date nowtime;
     private  String logtype;
     private String message;
-    private  String imgsrc;
+    private  int viewcount;
+    private int imgid;
+    private List<String> imgpath;
 
     public LoveLog() {
     }
 
-    public LoveLog(String username, String title, String coversrc, Date nowtime, String logtype, String message, String imgsrc) {
+    public LoveLog(String username, String title, String coversrc, Date nowtime, String logtype, String message, int viewcount) {
         this.username = username;
         this.title = title;
         this.coversrc = coversrc;
         this.nowtime = nowtime;
         this.logtype = logtype;
         this.message = message;
-        this.imgsrc = imgsrc;
+        this.viewcount = viewcount;
     }
 
-    public LoveLog(int id, String username, String title, String coversrc, Date nowtime, String logtype, String message, String imgsrc) {
+    public LoveLog(String username, String title, String coversrc, Date nowtime, String logtype, String message, int viewcount, int imgid, List<String> imgpath) {
+        this.username = username;
+        this.title = title;
+        this.coversrc = coversrc;
+        this.nowtime = nowtime;
+        this.logtype = logtype;
+        this.message = message;
+        this.viewcount = viewcount;
+        this.imgid = imgid;
+        this.imgpath = imgpath;
+    }
+
+    public LoveLog(int id, String username, String title, String coversrc, Date nowtime, String logtype, String message, int viewcount, int imgid, List<String> imgpath) {
         this.id = id;
         this.username = username;
         this.title = title;
@@ -33,7 +48,26 @@ public class LoveLog {
         this.nowtime = nowtime;
         this.logtype = logtype;
         this.message = message;
-        this.imgsrc = imgsrc;
+        this.viewcount = viewcount;
+        this.imgid = imgid;
+        this.imgpath = imgpath;
+    }
+
+    public int getImgid() {
+        return imgid;
+    }
+
+    public void setImgid(int imgid) {
+        this.imgid = imgid;
+    }
+
+
+    public List<String> getImgpath() {
+        return imgpath;
+    }
+
+    public void setImgpath(List<String> imgpath) {
+        this.imgpath = imgpath;
     }
 
     public String getCoversrc() {
@@ -92,12 +126,12 @@ public class LoveLog {
         this.message = message;
     }
 
-    public String getImgsrc() {
-        return imgsrc;
+    public int getViewcount() {
+        return viewcount;
     }
 
-    public void setImgsrc(String imgsrc) {
-        this.imgsrc = imgsrc;
+    public void setViewcount(int viewcount) {
+        this.viewcount = viewcount;
     }
 
     @Override
@@ -110,7 +144,9 @@ public class LoveLog {
                 ", nowtime=" + nowtime +
                 ", logtype='" + logtype + '\'' +
                 ", message='" + message + '\'' +
-                ", imgsrc='" + imgsrc + '\'' +
+                ", viewcount=" + viewcount +
+                ", imgid=" + imgid +
+                ", imgpath=" + imgpath +
                 '}';
     }
 }
