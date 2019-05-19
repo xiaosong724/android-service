@@ -13,6 +13,6 @@ public class LogMapperService {
     public int lovelogup(LoveLog loveLog){
         logMapper.lovelogup(loveLog);
         return loveLog.getId();
-    };
+    }
 
 }
