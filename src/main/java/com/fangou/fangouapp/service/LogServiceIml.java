@@ -153,9 +153,15 @@ public class LogServiceIml implements LogService {
         logMapper.updateNewBackgroundHight(hightback, id);
     }
 
+    /**
+     * ajax显示当前点击的日志图片并且当前日志浏览次数加1
+     * @param logid
+     * @return
+     */
     @Override
     public List<Loveimg> showLoveImg(int logid) {
         List<Loveimg> loveimgs = logMapper.showLoveImg(logid);
+        logMapper.updateViewTimeAdd(logid);
         return loveimgs;
     }
 

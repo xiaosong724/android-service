@@ -31,7 +31,7 @@
 
 		<div>
 			<h2><%=title%></h2>
-			<em>日志专属ID:<%=id%> 浏览次数:<%=viewcount%></em>
+			<em id="cmt_id" cmttitle="<%=title%>" cmtid="<%=id%>">日志专属ID:<%=id%> 浏览次数:<%=viewcount%></em>
 			<em>作者:<%=username%>  类型:<%=logtype%></em>
 			<p>
 				<%=message%>
@@ -42,6 +42,20 @@
 			<h3>加载中......</h3>
 			</div>
 		</div>
+		<hr>
+		<div align="center">
+			<h3 style="font-weight: bold;">评论区</h3>
+		</div>
+		<div class="row" id="comment_show_list">
+			<em>点击下按钮查看评论</em>
+		</div>
+		<hr>
+		<div class="row" align="center">
+			<div class="input-group">
+				<button id="btnchangetext" onclick="btnchangetext(this)" class="btn btn-default">查看评论,我也来BB两句</button>
+			</div>
+		</div>
+
 	</div>
 </body>
 <script src="js/jquery-2.1.1.js"></script>

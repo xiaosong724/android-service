@@ -51,6 +51,7 @@ public interface LogMapper {
      */
     @Select("SELECT l.*,lg.title FROM logimgtab l,lovelogtab lg WHERE l.logid=lg.id")
     List<Logimg>showLogimg();
+
     /**
      * 每删除一次查询本日志是否还有图片
      * @param logid
@@ -58,13 +59,43 @@ public interface LogMapper {
      */
     @Select("SELECT l.imgpath,MIN(imgid) FROM logimgtab l WHERE logid=#{logid}")
     ImgidAndImgpath queryIdAndpath(int logid);
+
+    /**
+     * 查询用户信息
+     * @param logname
+     * @return
+     */
+    @Select("SELECT * FROM loguser WHERE logname=#{logname}")
+    LogUser logUserMsg(String logname);
+
+    /**
+     * 显示当前日志的评论
+     * @return
+     */
+    @Select("SELECT * FROM logcmttab WHERE logid=#{logid} ORDER BY texttime DESC")
+    List<LogComment> showLogComment(int logid);
+
     /**
      * 写入一篇日志
      * @param loveLog
      */
-    @Insert("INSERT INTO lovelogtab (username,title,coversrc,nowtime,logtype,message,viewcount) values(#{username},#{title},#{coversrc},#{nowtime},#{logtype},#{message},#{viewcount})")
+    @Insert("INSERT INTO lovelogtab (username,title,coversrc,nowtime,logtype,message,viewcount) VALUES(#{username},#{title},#{coversrc},#{nowtime},#{logtype},#{message},#{viewcount})")
     @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
     int lovelogup(LoveLog loveLog);
+
+    /**
+     * 新添加用户
+     */
+    @Insert("INSERT INTO loguser (logname,logpassword,logcount) VALUES(#{logname},#{logpassword},#{logcount})")
+    void addUser(LogUser logUser);
+
+    /**
+     * 给日志添加评论
+     * @param logComment
+     */
+    @Insert("INSERT INTO logcmttab (logid,logname,comment,texttime) VALUES(#{logid},#{logname},#{comment},#{texttime})")
+    @Options(useGeneratedKeys = true,keyProperty = "id",keyColumn = "id")
+    void addLogComment(LogComment logComment);
 
     /**
      * 写入一篇日志时插入图片list
@@ -93,6 +124,13 @@ public interface LogMapper {
      */
     @Update("UPDATE backgroundtab SET yesback = 'show' WHERE id = #{id}")
     void updateNewBackground(int id);
+
+    /**
+     * 添加点击日志的浏览次数
+     * @param id
+     */
+    @Update("UPDATE lovelogtab SET viewcount = viewcount+1 WHERE id = #{id}")
+    void updateViewTimeAdd(int id);
 
     /**
      * 修改上传背景图ID它高是否拉伸

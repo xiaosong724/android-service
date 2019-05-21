@@ -32,6 +32,8 @@ jQuery(document).ready(function($){
 
 	function toggleContent(url, bool) {
 		if( bool ) {
+
+
 			/* load and show new content */
 			var foldingContent = $('.cd-fold-content');
 			foldingContent.load(url+' .cd-fold-content > *', function(event){

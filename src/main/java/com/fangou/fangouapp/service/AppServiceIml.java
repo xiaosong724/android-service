@@ -2,7 +2,6 @@ package com.fangou.fangouapp.service;
 
 import com.fangou.fangouapp.mapper.LogMapper;
 import com.fangou.fangouapp.vo.Logimg;
-import com.fangou.fangouapp.vo.LoveLog;
 import com.fangou.fangouapp.vo.Loveimg;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;

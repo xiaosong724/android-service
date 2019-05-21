@@ -166,4 +166,41 @@
 </div>
 
 
+<%--登录框--%>
+<div class="modal fade" id="exampleModal_login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form  method="post" enctype="multipart/form-data" >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="exampleModalLabel_login">输入后就创建,下次失效后再输入一样的不会再创建而是登录!</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                            <label for="recipient_login" class="control-label">用户名:</label>
+                            <input type="text" name="logtype" class="form-control" id="recipient_login">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient_login_password" class="control-label">登录码:</label>
+                        <input type="text" name="logtype" class="form-control" id="recipient_login_password">
+                    </div>
+                    <span id="himt_value_login" style='color:red'></span>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                    <button type="button" onclick="login_log()" id="onlyone_click_login" class="btn btn-primary">登录</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<%--图片显示框--%>
+<div class="modal fade" id="exampleModal_imgshow" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+<img id="pathimg_click" onclick="pathimg_click()" style="width: 100%" src="">
+</div>
 

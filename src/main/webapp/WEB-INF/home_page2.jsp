@@ -85,7 +85,7 @@
                 <a onclick="show_img_list(${lovelog.id})" href="/<c:out value="${myURL}"/>">
                     <div>
                         <h2>${lovelog.title}</h2>
-                        <p>Time:<fmt:formatDate
+                        <p>ID:${lovelog.id} Time:<fmt:formatDate
                                 value="${lovelog.nowtime}" pattern="yyyy-MM-dd"/></p>
                         <b>Forever Love</b>
                     </div>
@@ -114,7 +114,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="anniu/gooey.min.js"></script>
 <script src="homepagetwo/js/main.js"></script> <!-- Resource jQuery -->
-<script type="text/javascript" src="js/zooming.js"></script>
+<script src="js/jquery.cookie.js"></script>
 <script>
     var formDatalog = new FormData();
     //日志填写验证
@@ -123,7 +123,8 @@
         return false;
     }
 
-    //显示点开的日志图片
+
+/* -------------------------显示点开的日志图片------------------------------- */
     function show_img_list(logid) {
         setTimeout(function () {  $.ajax({
                 type: "POST",
@@ -134,7 +135,7 @@
                     $("#imgshow_log").html("");
                     for(var imgp in msg){
                         $("#imgshow_log").html($("#imgshow_log").html()+"\n" +
-                            "<img src=\"/img/mini/"+msg[imgp].imgpath+"\" id=\""+msg[imgp].imgid+"\" onclick='show_hide_title(this)' class=\"songsize\" data-action=\"zoom\" data-original=\"/img/"+msg[imgp].imgpath+"\"  >")
+                            "<img src=\"/img/mini/"+msg[imgp].imgpath+"\" id=\""+msg[imgp].imgid+"\" onclick=\"show_hide_title('"+msg[imgp].imgpath+"')\" class=\"songsize\">")
                     }
 
                 }
@@ -143,18 +144,111 @@
         ,1500);
 
     }
-    function show_hide_title(my){
-       var title=$(my).parent().parent().prev();
-        if(title.is(':hidden')){　　//如果node是隐藏的则显示node元素，否则隐藏
-
-            title.show();
-
-        }else{
-
-            title.hide();
-
+    //点击显示点击的图片
+    function show_hide_title(pathimg){
+        if($("#exampleModal_imgshow").is(":hidden")){
+            $("#exampleModal_imgshow").modal('show');
+        }else {
+            $("#exampleModal_imgshow").modal('hide');
         }
+
+        $("#pathimg_click").attr("src","/img/"+pathimg);
+
     }
+    //再次点击隐藏
+    function pathimg_click() {
+        $("#exampleModal_imgshow").modal('hide');
+    };
+/* -------------------------显示点开的日志图片------------------------------- */
+
+
+
+/* -------------------------对日志发表评论------------------------------- */
+    //点击评论按钮,按钮变成文本框
+    function btnchangetext(my) {
+        $(my).after("<input id='comment_val' type=\"text\" class=\"form-control\" placeholder=\"不能为空哦...\">\n" +
+            "      <span class=\"input-group-btn\">\n" +
+            "        <button onclick='add_log_comment(this)' class=\"btn btn-default\" type=\"button\">To</button>\n" +
+            "      </span>");
+        $(my).parent().before("<nav aria-label=\"Page navigation\">\n" +
+            "  <ul class=\"pagination\">\n" +
+            "    <li>\n" +
+            "      <a href=\"#\" id='per_page' onclick='pagecomment(0)' aria-label=\"Previous\">\n" +
+            "        <span aria-hidden=\"true\">&laquo;</span>\n" +
+            "      </a>\n" +
+            "    </li>\n" +
+            "    <li>\n" +
+            "      <a href=\"#\" id='next_page' onclick='pagecomment(0)' aria-label=\"Next\">\n" +
+            "        <span aria-hidden=\"true\">&raquo;</span>\n" +
+            "      </a>\n" +
+            "    </li>\n" +
+            "  </ul>\n" +
+            "</nav>");
+        $(my).remove();
+        var cmt_id=$("#cmt_id").attr("cmtid");
+        $.ajax({
+            type: "POST",
+            url: "/showcomment",
+            data: "logid="+cmt_id,
+            dataType:"json",
+            success: function (msg) {
+                $("#per_page").attr("onclick","pagecomment("+msg[1]+")");
+                $("#next_page").attr("onclick","pagecomment("+msg[0]+")");
+                $("#comment_show_list").html("");
+                var commentlist=JSON.parse(msg[2]);
+                for (var val in commentlist) {
+                    $("#comment_show_list").html($("#comment_show_list").html()+"<div>\n" +
+                        "\t<em>"+commentlist[val].logname+":</em><em class=\"pull-right\">"+commentlist[val].id+"楼 TOP</em>\n" +
+                        "\t<p>"+commentlist[val].comment+"</p>\n" +
+                        "\t<p style=\"font-size: x-small\" class=\"pull-right\">"+commentlist[val].texttime+"</p>\n" +
+                        "</div>\n" +
+                        "<h2 class=\"page-header\"></h2>");
+
+                }
+                if(commentlist.length==0){
+                    $("#comment_show_list").html("<em>当前日志没有评论~</em>");
+                }
+            }
+        });
+    }
+    //发送日志评论
+    function add_log_comment(my) {
+        var comment_val=$("#comment_val").val();
+        var user_name_log=$.cookie("user_name_log");
+        var cmt_id=$("#cmt_id").attr("cmtid");
+        var cmttitle=$("#cmt_id").attr("cmttitle");
+        if(comment_val.length<1){
+            alert("评论不能为空");
+            return;
+        }
+        if(user_name_log==undefined){
+            alert("你没有登录");
+            return;
+        }
+        $(my).attr("disabled","disabled");
+        $.ajax({
+            type: "POST",
+            url: "/addcommert",
+            data: "comment="+comment_val+"&logname="+user_name_log+"&logid="+cmt_id+"&title="+cmttitle,
+            dataType: "json",
+            success: function (msg) {
+                $("#comment_show_list").html("<div>\n" +
+                    "\t<em>"+msg.logname+":</em><em class=\"pull-right\">"+msg.id+"楼 TOP</em>\n" +
+                    "\t<p>"+msg.comment+"</p>\n" +
+                    "\t<p style=\"font-size: x-small\" class=\"pull-right\">"+msg.texttime+"</p>\n" +
+                    "</div>\n" +
+                    "<h2 class=\"page-header\"></h2>"+ $("#comment_show_list").html());
+                $("#comment_val").val("");
+                $(my).attr("disabled",false);
+            }
+        });
+
+    }
+/* -------------------------对日志发表评论------------------------------- */
+
+
+
+
 
 
     //修改日志
@@ -257,7 +351,10 @@
         });
 
     }
-    //添加新的日志中的file,并显示新添加的图片
+
+
+/* -------------------------新添加的日志并上传新的图片------------------------------- */
+    //预览新添加的日志图片
     $("#newlogfile").on('change',function (e) {
         var file=e.target.files || e.dataTransfer.files || e.dataTransfer.getData;
         for(var i = 0; i < file.length; i++){
@@ -299,7 +396,7 @@
         //console.log(FormData);
         // console.log(file);
     });
-    //新添加日志的文本信息,或者并上传新的图片
+    //
     function upload_log_text() {
         var recipient_title =$("#recipient_title").val();
         var recipient_name =$("#recipient_name").val();
@@ -349,11 +446,14 @@
         });
 
     }
+    /* -------------------------新添加的日志并上传新的图片------------------------------- */
 
 
 
 
-    //更新修改日志中的file,并显示新添加的图片
+
+/* -------------------------修改日志的文本信息,或者并上传新的图片------------------------------- */
+    //修改日志,新添加的图片预览
     $("#scscsc").on('change',function (e) {
         var file=e.target.files || e.dataTransfer.files || e.dataTransfer.getData;
         for(var i = 0; i < file.length; i++){
@@ -361,7 +461,6 @@
             console.log(file[i].name)
         }
         var countFiles = $(this)[0].files.length;
-
         var imgPath = $(this)[0].value;
         var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
         var image_holder = $("#image-holder");
@@ -393,10 +492,9 @@
             alert("请选择图像文件。");
         }
         //console.log(FormData);
-       // console.log(file);
+        // console.log(file);
     });
-
-    //修改日志的文本信息,或者并上传新的图片
+    //上传图片,修改日志
     function update_log_text() {
         var recipient_title_up =$("#recipient_title_up").val();
         var recipient_name_up =$("#recipient_name_up").val();
@@ -430,8 +528,11 @@
             });
 
     }
+/* -------------------------修改日志的文本信息,或者并上传新的图片------------------------------- */
 
-    //新添加的背景图显示
+
+
+/* ----------------------------上传新添加的背景图显示预览---------------------------------- */
     $("#recipient-backpath_back").on('change', function () {
 
         if (typeof (FileReader) != "undefined") {
@@ -454,7 +555,7 @@
             alert("你的浏览器不支持FileReader.");
         }
     });
-    //上传欢迎背景图
+    // 上传欢迎背景图
     function  uploadback(){
         var formData = new FormData();
         var radioval= $("input[name='background_img']:checked").val();
@@ -468,7 +569,7 @@
         if(ckbox_hight){
             hightback="100%";
         }
-    $("#onlyone_click").attr("disabled","disabled");
+    $("#onlyone_click").attr("disabled","disabled");//点击一次后上传按钮失效
         formData.append("myfile", document.getElementById("recipient_backpath_back").files[0]);
         formData.append("yesback", radioval);
         formData.append("hightback",hightback);
@@ -493,19 +594,60 @@
                 $("#onlyone_click").removeAttr("disabled");
                 $("#exampleModal_back").modal('hide');//模态框手动关闭
                 alert(data);
-
-
             },
             error: function () {
                 alert("上传失败！");
             }
         });
     }
+/* ----------------------------上传新添加的背景图显示预览---------------------------------- */
 
+
+/* ----------------------------登录或注册---------------------------------- */
+
+    //输入查询用户是否存在
+    $("#recipient_login").on('change',function (){
+        var name_log=$("#recipient_login").val();
+        var himt_value_login=$("#himt_value_login");
+        $.ajax({
+            url:"/existlogname",
+            type:"post",
+            data: "logname="+name_log,
+            dataType:"text",
+            success: function (msg) {
+                himt_value_login.text(msg);
+            }
+        });
+    });
+    //用户登录或注册验证
+    function login_log(){
+      var name_log=$("#recipient_login").val();
+      var pass_log=$("#recipient_login_password").val();
+      var himt_value_login=$("#himt_value_login");
+      if(name_log.length<1||pass_log.length<3){
+          himt_value_login.text("用户名长度大于1,密码大于3!");
+          return;
+      }
+        $.ajax({
+            url:"/loginandregister",
+            type:"post",
+            data: "logname="+name_log+"&logpassword="+pass_log,
+            dataType:"text",
+            success: function (msg) {
+                if(msg=="用户存在,但是密码不正确"){
+                    himt_value_login.text(msg);
+                }
+                if(msg=="新用户注册成功!"||msg=="登陆成功!"){
+                    $("#exampleModal_login").modal('hide');
+                }
+            }
+        });
+
+    }
+/* ----------------------------登录或注册---------------------------------- */
 
 
     $(function ($) {
-
         $("#gooey-h").gooeymenu({
             bgColor: "#68d099",
             contentColor: "white",
@@ -527,8 +669,12 @@
             transitionStep: 100,
             hover: "#5dbb89"
         });
-
+            if($.cookie('user_name_log')==undefined){
+                $("#exampleModal_login").modal('show');
+            }
     });
+
+
 </script>
 </body>
 </html>

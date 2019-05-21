@@ -33,7 +33,11 @@ public interface LogService {
     void updateNewBackground(int id);
 
     void updateNewBackgroundHight(int id,String hightback);
-
+    /**
+     * ajax显示当前点击的日志图片,并且当前日志浏览次数加1
+     * @param logid
+     * @return
+     */
     List<Loveimg> showLoveImg(int logid);
 
     void deleteImgId(HttpServletRequest request,int imgid,String impath,int logid,String title);
@@ -41,6 +45,7 @@ public interface LogService {
     void updateLogtext(String username,String title,String logtype,String message,int id);
 
     void updateLogaddimg(HttpServletRequest request,MultipartFile[] file,int logid);
+
 
     List<Logimg> showLogimg(HashSet<Logimg> logimgList);
 }
