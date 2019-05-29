@@ -48,9 +48,9 @@ public class UpdateLogCon {
 
     @ResponseBody
     @RequestMapping("/deleteimgid")
-    public String deleteimgid(HttpServletRequest requestint,int imgid,String impath,int logid,String title){
+    public String deleteimgid(HttpServletRequest requestint,int imgid,String impath,int logid,String title,String rootname){
         logService.deleteImgId(requestint,imgid,impath,logid,title);
-        jpushService.sendPush("修改了ID为:"+logid+"的日志","删除了:["+impath+"]",extrasMap);
+        jpushService.sendPush("["+rootname+"]修改了ID为:"+logid+"的日志","删除了:["+impath+"]",extrasMap);
         return "删除成功";
     }
 
@@ -102,7 +102,7 @@ public class UpdateLogCon {
      */
     @ResponseBody
     @RequestMapping("/uploadimgupdate")
-    public String uploadimgupdate(HttpServletRequest request,MultipartFile[] file,int id,String username,String title,String logtype,String message){
+    public String uploadimgupdate(HttpServletRequest request,MultipartFile[] file,int id,String username,String title,String logtype,String message,String rootname){
         System.out.println("本子文件上传的数量:"+file.length);
         System.out.println(username);
         System.out.println(title);
@@ -115,7 +115,7 @@ public class UpdateLogCon {
         logService.updateLogtext(username, title, logtype, message, id);
         logService.updateLogaddimg(request,file,id);
 
-        jpushService.sendPush("["+username+"]修改了日志,专属ID:"+id,"修改的日志标题:《"+title+"》"+ifuploadimg,extrasMap);
+        jpushService.sendPush("["+rootname+"]修改了日志,专属ID:"+id,"修改的日志标题:《"+title+"》"+ifuploadimg,extrasMap);
         return "修改成功";
     }
 

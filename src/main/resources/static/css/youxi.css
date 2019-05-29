@@ -1,0 +1,323 @@
+/*-----------------宠物-------宠物---------宠物----------------宠物---------------宠物------------宠物-------------------*/
+/*PK按钮*/
+.pkbtn{
+    position: absolute;
+    left: 47%;
+    top: 30%;
+}
+/*左边信息框*/
+.top-l {
+    position: absolute;
+    top: 50px;
+    left: 1px;
+}
+
+/*右边信息框*/
+.top-r {
+    position: absolute;
+    top: 50px;
+    right: 1px;
+}
+/*左边的血条*/
+.xuetiao-l {
+    position: absolute;
+    left: 10px;
+}
+
+/*右边的血条*/
+.xuetiao-r {
+    position: absolute;
+    right: 10px;
+}
+/*左边头像*/
+.imgtop-l {
+    position: absolute;
+    top: -40px;
+    left: 170px;
+    width: 60px;
+}
+
+/*右边头像*/
+.imgtop-r {
+    position: absolute;
+    top: -40px;
+    right: 170px;
+    width: 60px;
+}
+
+/*左边宠物*/
+.renwu_one_top {
+    position: absolute;
+    left: 110px;
+    top: 200px;
+    width: 100px;
+
+}
+/*右边宠物*/
+.renwu_tow_top {
+    position: absolute;
+    width: 100px;
+    right: 120px;
+    top: 200px;
+}
+
+/*--------------------六方剑阵---------------------六方剑阵------------------------六方剑阵-------------------*/
+/*左边技能*/
+.jineng_l {
+    position: absolute;
+    left: 40px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    width: 200px;
+    top: 150px;
+    display: none;
+}
+/*右边技能*/
+.jineng_r {
+    position: absolute;
+    right: 35px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    width: 200px;
+    top: 150px;
+    display: none;
+}
+/*左边技能名字*/
+.jineng_l_name {
+    position: absolute;
+    top: 120px;
+    left: 55px;
+    color: white;
+    font-size: 25px;
+    display: none;
+}
+/*右边技能名字*/
+.jineng_r_name {
+    position: absolute;
+    right: 80px;
+    top: 120px;
+    color: white;
+    font-size: 25px;
+    display: none;
+}
+
+
+
+/*____________光明星阵_______________光明星阵_____________光明星阵___________光明星阵____________*/
+
+/*左边技能*/
+.jineng_gmxz_l {
+    position: absolute;
+    left: 30px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    width: 200px;
+    top: 120px;
+}
+/*右边技能*/
+.jineng_gmxz_r {
+    position: absolute;
+    right: 50px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    width: 200px;
+    top: 120px;
+}
+/*左边技能名字*/
+.jineng_gmxz_name_l {
+    position: absolute;
+    left: 70px;
+    top: 80px;
+    color: white;
+    font-size: 25px;
+}
+/*右边技能名字*/
+.jineng_gmxz_name_r {
+    position: absolute;
+    right: 95px;
+    top: 80px;
+    color: white;
+    font-size: 25px;
+}
+
+/*____________科技魔法_______________科技魔法_____________科技魔法___________科技魔法____________*/
+/*左边技能*/
+.jineng_kjmf_l {
+    position: absolute;
+    left: 30px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    width: 200px;
+    top: 100px;
+}
+/*右边技能*/
+.jineng_kjmf_r {
+    position: absolute;
+    right: 30px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    width: 200px;
+    top: 100px;
+}
+/*左边技能名字*/
+.jineng_kjmf_name_l {
+    position: absolute;
+    left: 70px;
+    top: 80px;
+    color: white;
+    font-size: 25px;
+}
+/*右边技能名字*/
+.jineng_kjmf_name_r {
+    position: absolute;
+    right: 95px;
+    top: 80px;
+    color: white;
+    font-size: 25px;
+}
+
+
+/*--------极光空气流---------极光空气流--------------------极光空气流-----------------极光空气流------------*/
+/*左边技能*/
+.jineng_jgkql_l {
+    position: absolute;
+    z-index: 2;
+    left: 30px;
+    opacity: 0.90;
+    filter: alpha(opacity=90);
+    width: 200px;
+    top: 180px;
+}
+/*右边技能*/
+.jineng_jgkql_r {
+    position: absolute;
+    right: 30px;
+    opacity: 0.90;
+    filter: alpha(opacity=90);
+    width: 200px;
+    top: 180px;
+}
+/*左边技能名字*/
+.jineng_jgkql_name_l {
+    position: absolute;
+    left: 70px;
+    top: 100px;
+    color: white;
+    font-size: 25px;
+}
+/*右边技能名字*/
+.jineng_jgkql_name_r {
+    position: absolute;
+    right: 95px;
+    top: 100px;
+    color: white;
+    font-size: 25px;
+}
+
+
+/*----------极光锥-----------极光锥-----------------极光锥----------------极光锥---------------------*/
+/*左边技能*/
+.jineng_jgz_l {
+    position: absolute;
+    left: 30px;
+    opacity: 0.90;
+    z-index: 2;
+    filter: alpha(opacity=90);
+    width: 200px;
+    top: 180px;
+}
+/*右边技能*/
+.jineng_jgz_r {
+    position: absolute;
+    right: 30px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    width: 200px;
+    top: 180px;
+}
+/*左边技能名字*/
+.jineng_jgz_name_l {
+    position: absolute;
+    left: 70px;
+    top: 80px;
+    color: white;
+    font-size: 25px;
+}
+/*右边技能名字*/
+.jineng_jgz_name_r {
+    position: absolute;
+    right: 95px;
+    top: 80px;
+    color: white;
+    font-size: 25px;
+}
+
+/*--------------风暴聚集-------------风暴聚集------------风暴聚集--------------风暴聚集--------------*/
+/*左边技能*/
+.jineng_fbjj_l {
+    position: absolute;
+    left: 1px;
+    opacity: 0.90;
+    z-index: 2;
+    filter: alpha(opacity=90);
+    width: 250px;
+    top: 180px;
+}
+/*右边技能*/
+.jineng_fbjj_r{
+    position: absolute;
+    right: 1px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    width: 250px;
+    top: 180px;
+}
+/*左边技能名字*/
+.jineng_fbjjname_l {
+    position: absolute;
+    left: 70px;
+    top: 80px;
+    color: white;
+    font-size: 25px;
+}
+/*右边技能名字*/
+.jineng_fbjjname_r {
+    position: absolute;
+    right: 95px;
+    top: 80px;
+    color: white;
+    font-size: 25px;
+}
+
+/*--------------必杀.暗黑锥------------必杀.暗黑锥---------------必杀.暗黑锥------------*/
+/*左边技能*/
+.jineng_ahz_l {
+    position: absolute;
+    left: 30px;
+    z-index: 2;
+    width: 200px;
+    top: 180px;
+}
+/*右边技能*/
+.jineng_ahz_r{
+    position: absolute;
+    right: 30px;
+    width: 200px;
+    top: 180px;
+}
+/*左边技能名字*/
+.jineng_ahz_name_l {
+    position: absolute;
+    left: 70px;
+    top: 100px;
+    color: #6193ff;
+    font-size: 25px;
+}
+/*右边技能名字*/
+.jineng_ahz_name_r {
+    position: absolute;
+    right: 25px;
+    top: 100px;
+    color: #6193ff;
+    font-size: 25px;
+}

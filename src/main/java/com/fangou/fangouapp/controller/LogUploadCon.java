@@ -41,21 +41,20 @@ public class LogUploadCon {
      */
     @ResponseBody
     @RequestMapping("/lovelogup")
-    public String uploadLog(HttpServletRequest request, @RequestParam("file")MultipartFile[] file, String title,String username, String logtype, String message){
+    public String uploadLog(HttpServletRequest request, @RequestParam("file")MultipartFile[] file, String title,String username, String logtype, String message,String rootname){
         //设置图片路径
         System.out.println("标题="+title+",作者="+username+",类型="+logtype+"message="+message);
         logService.upLogImg(file,request,title,username,logtype,message);
         Map<String, String> extrasMap = new HashMap<String, String>();
-        jpushService.sendPush("["+username+"]发表一篇新的日志","标题:《"+title+"》",extrasMap);
+        jpushService.sendPush("["+rootname+"]发表一篇新的日志","标题:《"+title+"》",extrasMap);
         return "发表成功!";
     }
 
     @ResponseBody
     @RequestMapping("/showloglist")
-    public String showloglist(Model model,int logid){
+    public String showloglist(int logid){
         List<Loveimg> loveimgs = logService.showLoveImg(logid);
         String toJson = gson.toJson(loveimgs);
-        System.out.println(toJson);
 
         return toJson;
     }

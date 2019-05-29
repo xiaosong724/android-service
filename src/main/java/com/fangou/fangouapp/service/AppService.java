@@ -9,4 +9,5 @@ public interface AppService {
 
     String showLogimg();
     void recoverLogimg(Logimg logimg);
+
 }

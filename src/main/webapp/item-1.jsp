@@ -20,6 +20,7 @@
 	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
 
+
 	<script src="js/modernizr.js"></script> <!-- Modernizr -->
   	
 	<title>3D Folding Panel</title>
@@ -60,6 +61,7 @@
 </body>
 <script src="js/jquery-2.1.1.js"></script>
 <script src="js/main.js"></script> <!-- Resource jQuery -->
+<script src="js/jquery.cookie.js"></script>
 
 </body>
 <script>

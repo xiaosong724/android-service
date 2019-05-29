@@ -198,9 +198,10 @@
     </div>
 </div>
 
-
 <%--图片显示框--%>
 <div class="modal fade" id="exampleModal_imgshow" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 <img id="pathimg_click" onclick="pathimg_click()" style="width: 100%" src="">
 </div>
-
+<div role="zeromodal-loading" zero-unique-loading="3fef3e4b04d04ce182e581cee7d6aac5" class="pacman" style="z-index:9999999;left:46%;top:203px;display: none">  <div></div>  <div></div>  <div></div>  <div></div>  <div></div>  </div>
+<div zero-unique-overlay="3fef3e4b04d04ce182e581cee7d6aac5" class="zeromodal-overlay" style="opacity:0.2;z-index:999999999;display: none">
+</div>

@@ -101,7 +101,7 @@ public interface LogMapper {
      * 写入一篇日志时插入图片list
      * @param loveimg
      */
-    @Insert("INSERT INTO logimgtab (logid,imgpath) VALUES(#{logid},#{imgpath})")
+    @Insert("INSERT INTO logimgtab (logid,imgpath,filetype) VALUES(#{logid},#{imgpath},#{filetype})")
     void loveimgup(Loveimg loveimg);
 
     /**

@@ -91,10 +91,14 @@ public class LogServiceIml implements LogService {
             try {
                 //上传文件
                 file[i].transferTo(dest); //保存文件
-                ToImgUtil.toSmaillImg(path, path2);
-                System.out.println("视频上传成功");
-                logMapper.loveimgup(new Loveimg(logid, imgsrc));
-                System.out.println("插入id" + logid);
+                if(file[i].getContentType().indexOf("image/")==0){
+                    ToImgUtil.toSmaillImg(path, path2);
+                    logMapper.loveimgup(new Loveimg(logid, imgsrc,"img"));
+                }else {
+                    logMapper.loveimgup(new Loveimg(logid, imgsrc,"video"));
+
+                }
+                System.out.println("上传成功");
             } catch (IOException e) {
                 System.out.println("上次失败");
             } catch (Exception e) {
@@ -211,7 +215,7 @@ public class LogServiceIml implements LogService {
             filenew.mkdirs();
         }
         for (int i = 0; i < file.length; i++) {
-
+            System.out.println( file[i].getContentType());
             if (file[i].isEmpty()) {
                 System.out.println("上传文件不可为空");
                 continue;
@@ -239,9 +243,13 @@ public class LogServiceIml implements LogService {
             try {
                 //上传文件
                 file[i].transferTo(dest); //保存文件
-                ToImgUtil.toSmaillImg(path, path2);
-                System.out.println("视频上传成功");
-                logMapper.loveimgup(new Loveimg(logid, imgsrc));
+                System.out.println("上传成功");
+                if(file[i].getContentType().indexOf("image/")==0){
+                    ToImgUtil.toSmaillImg(path, path2);
+                    logMapper.loveimgup(new Loveimg(logid, imgsrc,"img"));
+                }else {
+                    logMapper.loveimgup(new Loveimg(logid, imgsrc,"video"));
+                }
                 logMapper.updateLogimg("/img/mini/" + fileName, logid);
             } catch (IOException e) {
                 System.out.println("上次失败");
